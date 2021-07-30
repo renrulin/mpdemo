@@ -26,4 +26,5 @@ public class MpConfig {
     public PaginationInterceptor paginationInterceptor(){
         return new PaginationInterceptor();
     }
+
 }

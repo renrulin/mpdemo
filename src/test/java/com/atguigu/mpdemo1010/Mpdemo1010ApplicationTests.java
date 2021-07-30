@@ -2,6 +2,7 @@ package com.atguigu.mpdemo1010;
 
 import com.atguigu.mpdemo1010.entity.User;
 import com.atguigu.mpdemo1010.mapper.UserMapper;
+import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -71,6 +72,53 @@ public class Mpdemo1010ApplicationTests {
         System.out.println("总页数:"+page.getPages());
         System.out.println("下一页:"+page.hasNext());
         System.out.println("上一页:"+page.hasPrevious());
+
+    }
+
+    @Test
+    public void testDeleteById(){
+        int i = userMapper.deleteById(2);
+        System.out.println(i);
+    }
+
+    @Test
+    public void testDeleteByIds(){
+        int ids = userMapper.deleteBatchIds(Arrays.asList(8, 9));
+        System.out.println(ids);
+    }
+
+    //mp实现复杂查询
+    @Test
+    public void testSelectQuery(){
+        QueryWrapper<User> queryWrapper=new QueryWrapper<>();
+        //ge,gt,le,lt   >=,>,<=,<
+        //查询age>=12
+        //第一个参数字段名称，第二个设置值
+//        queryWrapper.ge("age",12);
+
+        //eq,ne
+//        queryWrapper.eq("name","aa");//查指定值
+//        queryWrapper.ne("name","aa");//查指定值之外
+
+        //between
+        //查询年龄在10-12
+//        queryWrapper.between("age",10,12);
+
+        //like
+        //模糊查询
+//        queryWrapper.like("name","a");
+
+        //orderByDesc
+        //排序
+//        queryWrapper.orderByAsc("age");
+
+        //last
+//        queryWrapper.last("limit 2");
+
+        //指定要查询的列
+        queryWrapper.select("id","name");
+        List<User> users = userMapper.selectList(queryWrapper);
+        System.out.println(users);
 
     }
 
